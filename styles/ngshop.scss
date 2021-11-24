@@ -1,0 +1,16 @@
+/*Base*/
+@import url('./base/colors.scss');
+@import url('./base/fonts.scss');
+@import url('./base/mixins.scss');
+@import url('./base/configuration.scss');
+
+/*Pages*/
+@import url('./shop/pages/home-page.scss');
+@import url('./shop/pages/product-list-page.scss');
+
+/*Shared*/
+@import url('./shop/shared/footer.scss');
+@import url('./shop/shared/header.scss');
+
+/*Libs*/ 
+@import url('./libs/ui/ui.scss');
