@@ -60,27 +60,31 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   private _addCategory(category : Category){
-    this.categoryService.createCategory(category).subscribe((res)=> {
-      this.messageService.add({severity:'success', summary:'Success', detail:'Category is created'});
-      timer(2000).toPromise().then(done => {
+    this.categoryService.createCategory(category).subscribe((category : Category)=> {
+      this.messageService.add({severity:'success', summary:'Success', detail:`Category ${category.name} is created`});
+      timer(2000).toPromise().then(() => {
         this.location.back();
       })
     }, 
-    (error) => {
+    () => {
       this.messageService.add({severity:'error', summary:'Error', detail:'Category is not created'});
     })
   }
 
   private _updateCategory(category : Category){
-    this.categoryService.updateCategory(category).subscribe((res)=> {
-      this.messageService.add({severity:'success', summary:'Success', detail:'Category is updated'});
-      timer(2000).toPromise().then(done => {
+    this.categoryService.updateCategory(category).subscribe((category : Category)=> {
+      this.messageService.add({severity:'success', summary:'Success', detail:`Category ${category.name} updated`});
+      timer(2000).toPromise().then(() => {
         this.location.back();
       })
     }, 
-    (error) => {
+    () => {
       this.messageService.add({severity:'error', summary:'Error', detail:'Category is not updated'});
     })
+  }
+
+  onCancel(){
+    this.location.back();
   }
 
   get categoryForm(){
