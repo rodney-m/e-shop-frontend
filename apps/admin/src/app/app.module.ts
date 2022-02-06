@@ -23,6 +23,8 @@ import {TableModule} from 'primeng/table';
 import {InputTextModule} from 'primeng/inputtext';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ColorPickerModule} from 'primeng/colorpicker';
+
 
 
 const UX_MODULE = [
@@ -32,7 +34,8 @@ const UX_MODULE = [
   TableModule,
   InputTextModule,
   ToastModule,
-  ConfirmDialogModule
+  ConfirmDialogModule,
+  ColorPickerModule
 ]
 
 const routes : Routes = [
