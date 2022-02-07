@@ -25,14 +25,14 @@
         <div class="grid">
             <div class="col-12">
                 <form [formGroup]="form">
-                    <div class="formgrid grid">
+                    <div class="formgrid grid p-fluid">
                         <div class="field col">
-                            <label for="firstname2">Name</label>
+                            <label for="name">Name</label>
                             <input id="name" type="text" pInputText class="inputfield w-full" formControlName="name">
                             <small *ngIf="categoryForm.name.invalid && isSubmitted" class="p-error">Name is required</small>
                         </div>
                         <div class="field col">
-                            <label for="lastname2" >Icon</label>
+                            <label for="icon" >Icon</label>
                             <input id="icon" type="text" pInputText class="inputfield w-full" formControlName="icon">
                             <small *ngIf="categoryForm.icon.invalid && isSubmitted" class="p-error">Icon is required</small>
                         </div>
