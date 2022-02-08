@@ -10,28 +10,28 @@ import { Product } from '../models/product';
   providedIn: 'root'
 })
 export class ProductsService {
-  apiURLCategories: string = environment.apiUrl + 'products';
+  apiURLProducts: string = environment.apiUrl + 'products';
 
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]>{
-    return this.http.get<Product[]>(this.apiURLCategories)
+    return this.http.get<Product[]>(this.apiURLProducts)
   }
 
-  // getCategory(categoryId: string): Observable<Category>{
-  //   return this.http.get<Category>(`${this.apiURLCategories}/${categoryId}`)
-  // }
+  getProduct(productId: string): Observable<Product>{
+    return this.http.get<Product>(`${this.apiURLProducts}/${productId}`)
+  }
 
-  // createCategory (category : Category) :Observable<Category>{
-  //   return this.http.post<Category>(this.apiURLCategories, category)
-  // }
+  createProduct (productData : FormData) :Observable<Product>{
+    return this.http.post<Product>(this.apiURLProducts, productData)
+  }
 
-  // updateCategory (category : Category) :Observable<Category>{
-  //   return this.http.put<Category>(`${this.apiURLCategories}/${category.id}`, category)
-  // }
+  updateProduct (productData : FormData, productId : string) :Observable<Product>{
+    return this.http.put<Product>(`${this.apiURLProducts}/${productId}`, productData)
+  }
 
-  // deleteCategory(categoryId : string) : Observable<Object>{
-  //   return this.http.delete<Object>(`${this.apiURLCategories}/${categoryId}`)
-  // }
+  deleteProduct(productId : string) : Observable<Product>{
+    return this.http.delete<Product>(`${this.apiURLProducts}/${productId}`)
+  }
   
 }

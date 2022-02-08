@@ -31,6 +31,11 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {DropdownModule} from 'primeng/dropdown';
 import {EditorModule} from 'primeng/editor';
+import { UsersFormComponent } from './pages/users/users-form/users-form.component';
+import { UsersListComponent } from './pages/users/users-list/users-list.component';
+import { TagModule } from 'primeng/tag';
+
+import { AppRoutingModule } from './app.routing.module';
 
 const UX_MODULE = [
   CardModule,
@@ -45,56 +50,20 @@ const UX_MODULE = [
   InputTextareaModule,
   InputSwitchModule,
   DropdownModule,
-  EditorModule
+  EditorModule,
+  TagModule
 ]
 
-const routes : Routes = [
-  {
-    path : '', 
-    component: ShellComponent,
-    children : [
-      {
-        path: 'dashboard',
-        component: DashboardComponent
-      },
-      {
-        path: 'categories',
-        component: CategoriesListComponent
-      }
-      ,
-      {
-        path: 'categories/form',
-        component: CategoriesFormComponent
-      },
-      {
-        path: 'categories/form/:id',
-        component: CategoriesFormComponent
-      },
-      {
-        path: 'products',
-        component: ProductsListComponent
-      }
-      ,
-      {
-        path: 'products/form',
-        component: ProductsFormComponent
-      },
-      {
-        path: 'products/form/:id',
-        component: ProductsFormComponent
-      }
-    ]
-  }
-]
+
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, ShellComponent, SidebarComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent],
+  declarations: [AppComponent, DashboardComponent, ShellComponent, SidebarComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
+    AppRoutingModule,
     CardModule,
     ...UX_MODULE,
   ],
