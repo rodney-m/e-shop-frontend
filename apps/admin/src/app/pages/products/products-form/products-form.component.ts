@@ -27,7 +27,7 @@ export class ProductsFormComponent implements OnInit {
     private productsService: ProductsService,
     private messageService : MessageService,
     private location: Location,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class ProductsFormComponent implements OnInit {
             name: ['', Validators.required],
             description: ['', Validators.required],
             richDescription: [''],
-            image: ['',],
+            image: ['', Validators.required],
             brand: ['', Validators.required],
             price: ['', Validators.required],
             category: ['', Validators.required],
@@ -77,7 +77,7 @@ export class ProductsFormComponent implements OnInit {
   }
 
   onCancel(){
-
+    this.location.back();
   }
 
   private _addProduct(productData : FormData){
@@ -140,7 +140,9 @@ export class ProductsFormComponent implements OnInit {
           this.productForm.isFeatured.setValue(product.isFeatured);
           this.productForm.description.setValue(product.description);
           this.productForm.richDescription.setValue(product.richDescription);
-          this.imageDisplay =  product.image
+          this.imageDisplay =  product.image;
+          this.productForm.image.setValidators([]);
+          this.productForm.image.updateValueAndValidity();
         })
       }
     })

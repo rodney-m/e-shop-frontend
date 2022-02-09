@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <div class="admin-page">
-    <p-card header="Products" subheader="List of all products">
+    <p-card header="Users" subheader="List of all users">
         <div class="grid">
             <div class="col-12">
                 <p-toolbar>
@@ -17,37 +17,36 @@
         </div>
         <div class="grid">
             <div class="col-12">
-                <p-table [value]="products" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]">
+                <p-table [value]="users" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]">
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                            <th>Image</th>
-                            <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-                            <th pSortableColumn="stock">Stock <p-sortIcon field="stock"></p-sortIcon></th>
-                            <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
-                            <th pSortableColumn="dateCreated">Created at <p-sortIcon field="dateCreated"></p-sortIcon></th>
+                            <th pSortableColumn="email">Name <p-sortIcon field="email"></p-sortIcon>>Email</th>
+                            <th>Is Admin</th>
+                            <th pSortableColumn="country">Name <p-sortIcon field="country"></p-sortIcon>>Country</th>
                             <th></th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-product>
+                    <ng-template pTemplate="body" let-user>
                         <tr>
-                            <td>{{product.name}}</td>
-                            <td><img [src]="product.image" style="max-width: 100px ;" alt="product image"></td>
-                            <td>{{product.price}}</td>
-                            <td>{{product.countInStock}}</td>
-                            <td>{{product.category?.name}}</td>
-                            <td>{{product.dateCreated | date : 'short'}} </td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>
+                                <p-tag *ngIf="user.isAdmin" icon="pi pi-check" severity="success" [rounded]="true" ></p-tag>
+                                <p-tag *ngIf="!user.isAdmin" icon="pi pi-times" severity="danger" [rounded]="true" ></p-tag>
+                            </td>
+                            <td>{{user.country}}</td>
                             <td>
                                 <p-button
                                 icon="pi pi-trash" 
                                 styleClass="p-button-danger mr-2"
-                                (click)="deleteProduct(product.id)"
+                                (click)="deleteUser(user.id)"
                                 ></p-button>
 
                                 <p-button
                                 icon="pi pi-pencil" 
                                 styleClass="p-button-success"
-                                (click)="updateProduct(product.id)"
+                                (click)="updateUser(user.id)"
                                 ></p-button>
                             </td>
                         </tr>
