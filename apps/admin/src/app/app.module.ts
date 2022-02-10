@@ -34,8 +34,11 @@ import {EditorModule} from 'primeng/editor';
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 import { UsersListComponent } from './pages/users/users-list/users-list.component';
 import { TagModule } from 'primeng/tag';
+import {InputMaskModule} from 'primeng/inputmask';
 
 import { AppRoutingModule } from './app.routing.module';
+import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
+import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 
 const UX_MODULE = [
   CardModule,
@@ -51,12 +54,13 @@ const UX_MODULE = [
   InputSwitchModule,
   DropdownModule,
   EditorModule,
-  TagModule
+  TagModule,
+  InputMaskModule
 ]
 
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, ShellComponent, SidebarComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent],
+  declarations: [AppComponent, DashboardComponent, ShellComponent, SidebarComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent, OrdersListComponent, OrdersDetailComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
