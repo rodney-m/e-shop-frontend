@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UsersService } from '@bluebits/users';
 import { ConfirmationService, MessageService } from 'primeng/api';
-
+import * as countriesLib  from"i18n-iso-countries";
 @Component({
   selector: 'admin-users-list',
   templateUrl: './users-list.component.html',
@@ -11,6 +11,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class UsersListComponent implements OnInit {
  users: User[] =[]
+ countries : any = []
 
   constructor(private messageService: MessageService,
     private confirmationService : ConfirmationService,
@@ -49,10 +50,11 @@ export class UsersListComponent implements OnInit {
 
   updateUser(userId : string) {
     this.router.navigateByUrl(`users/form/${userId}`)
+  }  
+
+  getCountry(countryKey: string): string {
+    return countriesLib.getName(countryKey, 'en');
   }
-
-
-  
 
 }
 

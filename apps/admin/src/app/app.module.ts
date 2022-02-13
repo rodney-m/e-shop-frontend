@@ -13,6 +13,7 @@ import { CategoriesListComponent } from './pages/categories/categories-list/cate
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 import { ProductsListComponent } from './pages/products/products-list/products-list.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
+import { UsersModule } from '@bluebits/users';
 
 import { CategoriesService } from '@bluebits/products';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -34,8 +35,13 @@ import {EditorModule} from 'primeng/editor';
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 import { UsersListComponent } from './pages/users/users-list/users-list.component';
 import { TagModule } from 'primeng/tag';
+import {InputMaskModule} from 'primeng/inputmask';
+import {FieldsetModule} from 'primeng/fieldset';
 
 import { AppRoutingModule } from './app.routing.module';
+import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
+import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
+
 
 const UX_MODULE = [
   CardModule,
@@ -51,12 +57,14 @@ const UX_MODULE = [
   InputSwitchModule,
   DropdownModule,
   EditorModule,
-  TagModule
+  TagModule,
+  InputMaskModule,
+  FieldsetModule
 ]
 
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, ShellComponent, SidebarComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent],
+  declarations: [AppComponent, DashboardComponent, ShellComponent, SidebarComponent, CategoriesListComponent, CategoriesFormComponent, ProductsListComponent, ProductsFormComponent, UsersFormComponent, UsersListComponent, OrdersListComponent, OrdersDetailComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -65,6 +73,7 @@ const UX_MODULE = [
     ReactiveFormsModule,
     AppRoutingModule,
     CardModule,
+    UsersModule,
     ...UX_MODULE,
   ],
   providers: [CategoriesService, MessageService, ConfirmationService],
