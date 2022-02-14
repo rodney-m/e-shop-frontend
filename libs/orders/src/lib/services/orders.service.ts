@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Order } from '../models/order';
 import { Observable } from 'rxjs';
-
+import { map } from 'rxjs/operators';
 import { environment } from '@env/enviroment'
 
 @Injectable({
@@ -34,4 +34,15 @@ export class OrdersService {
     return this.http.delete<Object>(`${this.apiURLOrders}/${orderId}`)
   }
   
+  getOrdersCount(): Observable<number> {
+    return this.http
+      .get<number>(`${this.apiURLOrders}/get/count`)
+      .pipe(map((objectValue: any) => objectValue.orderCount));
+  }
+
+  getTotalSales(): Observable<number> {
+    return this.http
+      .get<number>(`${this.apiURLOrders}/get/totalsales`)
+      .pipe(map((objectValue: any) => objectValue.totalSales));
+  }
 }

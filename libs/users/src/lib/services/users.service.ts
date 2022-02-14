@@ -4,6 +4,8 @@ import { environment } from '@env/enviroment';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import * as countriesLib  from"i18n-iso-countries";
+
+import { map } from 'rxjs/operators'
 @Injectable({
   providedIn: 'root'
 })
@@ -40,5 +42,11 @@ export class UsersService {
         name: entry[1]
       };
     });
+  }
+
+  getUsersCount(): Observable<number> {
+    return this.http
+      .get<number>(`${this.apiURLUsers}/get/count`)
+      .pipe(map((objectValue: any) => objectValue.userCount));
   }
 }

@@ -1,11 +1,12 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User, UsersService } from '@bluebits/users';
 import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import * as countriesLib  from"i18n-iso-countries";
+import { takeUntil } from 'rxjs/operators';
 
 declare const require : any;
 
@@ -15,8 +16,8 @@ declare const require : any;
   styles: [
   ]
 })
-export class UsersFormComponent implements OnInit {
-
+export class UsersFormComponent implements OnInit, OnDestroy {
+  endSubs$ : Subject<any> = new Subject()
   form! : FormGroup;
   isSubmitted  = false;
   editmode = false;
@@ -36,6 +37,11 @@ export class UsersFormComponent implements OnInit {
     this._innitUserForm();
     this._checkEditMode();
     this._getCountries();
+  }
+
+  ngOnDestroy(): void {
+      this.endSubs$.next();
+      this.endSubs$.complete();
   }
 
   private _innitUserForm(){
@@ -75,7 +81,7 @@ export class UsersFormComponent implements OnInit {
   }
 
   private _adduser(user : User){
-    this.usersService.createUser(user).subscribe((user : User)=> {
+    this.usersService.createUser(user).pipe(takeUntil(this.endSubs$)).subscribe((user : User)=> {
       this.messageService.add({severity:'success', summary:'Success', detail:`user ${user.name} is created`});
       timer(2000).toPromise().then(() => {
         this.location.back();
@@ -87,7 +93,7 @@ export class UsersFormComponent implements OnInit {
   }
 
   private _updateUser(user : User){
-    this.usersService.updateUser(user, this.currentUserId).subscribe((user : User)=> {
+    this.usersService.updateUser(user, this.currentUserId).pipe(takeUntil(this.endSubs$)).subscribe((user : User)=> {
       this.messageService.add({severity:'success', summary:'Success', detail:`user ${user.name} updated`});
       timer(2000).toPromise().then(() => {
         this.location.back();
@@ -121,7 +127,7 @@ export class UsersFormComponent implements OnInit {
       if (params.id){
         this.editmode = true;
         this.currentUserId = params.id
-        this.usersService.getUser(params.id).subscribe(user => {
+        this.usersService.getUser(params.id).pipe(takeUntil(this.endSubs$)).subscribe(user => {
           this.userForm.name.setValue(user.name)
           this.userForm.email.setValue(user.email)
           this.userForm.isAdmin.setValue(user.isAdmin)
