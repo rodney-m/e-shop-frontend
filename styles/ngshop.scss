@@ -1,3 +1,5 @@
+@import url('~normalize.css/normalize.css');
+
 /*Base*/
 @import url('./base/colors.scss');
 @import url('./base/fonts.scss');
@@ -20,6 +22,16 @@
 /*Shared*/
 @import url('./shop/shared/footer.scss');
 @import url('./shop/shared/header.scss');
+@import url('./shop/shared/nav.scss');
 
 /*Libs*/ 
 @import url('./libs/ui/ui.scss');
+@import url('./libs/products/products.scss');
+
+
+.container{
+    width: 1200px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: var(--surface-100);
+}
