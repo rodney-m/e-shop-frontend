@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UsersService } from '@bluebits/users';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import * as countriesLib  from"i18n-iso-countries";
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'admin-users-list',
   templateUrl: './users-list.component.html',
   styles: [
   ]
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit , OnDestroy{
+  endSubs$ : Subject<any> = new Subject();
  users: User[] =[]
  countries : any = []
 
@@ -24,8 +27,13 @@ export class UsersListComponent implements OnInit {
     this._getUsers()
   }
 
+  ngOnDestroy(): void {
+      this.endSubs$.next()
+      this.endSubs$.complete()
+  }
+
   private _getUsers(){
-    this.usersService.getUsers().subscribe((user) => {
+    this.usersService.getUsers().pipe(takeUntil(this.endSubs$)).subscribe((user) => {
       this.users =user
     })
   }
@@ -36,7 +44,7 @@ export class UsersListComponent implements OnInit {
       header: 'Delete User',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.usersService.deleteUser(userId).subscribe((user : User) => {
+        this.usersService.deleteUser(userId).pipe(takeUntil(this.endSubs$)).subscribe((user : User) => {
           this._getUsers()
           this.messageService.add({severity:'success', summary:'Success', detail:`Category ${user.name} deleted`});
         }, 

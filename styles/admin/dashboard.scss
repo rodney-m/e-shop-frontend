@@ -1,0 +1,31 @@
+.d-item{
+    display: flex;
+    text-align: center;
+    color: var(--surface-0);
+    justify-content: space-between;
+}
+
+.d-item .pi{
+    font-size: 4em;
+    margin-bottom: 15px;
+}
+.d-item .name{
+    font-size: 1.4em;
+}
+.d-item .number{
+    font-size: 2.5em;
+    margin-top: 15px;
+}
+
+.d-orders{
+    background-image: linear-gradient( 102.4deg,  rgba(253,189,85,1) 7.8%, rgba(249,131,255,1) 100.3% );
+}
+.d-products{
+    background-image: linear-gradient( 109.6deg,  rgba(218,185,252,1) 11.2%, rgba(125,89,252,1) 91.1% );
+}
+.d-users{
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(128,248,174,1) 0%, rgba(223,244,148,1) 90% );
+}
+.d-totalsales{
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(253,193,104,1) 0%, rgba(251,128,128,1) 90% );
+}
