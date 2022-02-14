@@ -18,7 +18,7 @@
                             <td>{{order.user.name}}</td>
                             <td>{{order.totalPrice}}</td>
                             <td>{{order.dateOrdered | date: 'short'}}</td>
-                            <td>{{order.status}}</td>
+                            <td><p-tag [value]="orderStatus[order.status].label" [severity]="orderStatus[order.status].color"></p-tag></td>
                             
                             <td>
                                 <p-button
@@ -28,7 +28,7 @@
                                 ></p-button>
 
                                 <p-button
-                                icon="pi pi-pencil" 
+                                icon="pi pi-eye" 
                                 styleClass="p-button-success"
                                 (click)="showOrder(order.id)"
                                 ></p-button>
