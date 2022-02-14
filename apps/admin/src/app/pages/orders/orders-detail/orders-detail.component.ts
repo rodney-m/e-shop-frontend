@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order, OrdersService } from '@bluebits/orders';
 import { MessageService } from 'primeng/api';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ORDER_STATUS } from '../order.constants';
 
 @Component({
   selector: 'admin-orders-detail',
   templateUrl: './orders-detail.component.html',
 })
-export class OrdersDetailComponent implements OnInit {
+export class OrdersDetailComponent implements OnInit, OnDestroy {
+  endSubs$ : Subject<any> = new Subject()
   order! : Order;
   selectedStatus! : any;
   orderStatuses = [
@@ -42,20 +45,24 @@ export class OrdersDetailComponent implements OnInit {
     this._getOrder()
   }
 
+  ngOnDestroy(): void {
+      this.endSubs$.next();
+      this.endSubs$.complete()
+  }
+
   private _getOrder(){
     this.activatedRoute.params.subscribe(params => {
       if(params.id){
-        this.orderService.getOrder(params.id).subscribe(order => {
+        this.orderService.getOrder(params.id).pipe(takeUntil(this.endSubs$)).subscribe(order => {
           this.order = order
           this.selectedStatus= order.status
         })
       }
     })
-    this.orderService.getOrder
   }
 
   onStatusChange(event: any){
-    this.orderService.updateOrder({status : event.value}, this.order.id!)
+    this.orderService.updateOrder({status : event.value}, this.order.id!).pipe(takeUntil(this.endSubs$))
       .subscribe((order) => {
         this.messageService.add({
           severity: 'success',

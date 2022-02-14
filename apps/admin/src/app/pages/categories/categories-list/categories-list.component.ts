@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriesService } from '@bluebits/products';
 import { Category } from '@bluebits/products';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'admin-categories-list',
@@ -11,8 +13,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   ]
 })
 
-export class CategoriesListComponent implements OnInit {
-  category : Category[] = []
+export class CategoriesListComponent implements OnInit, OnDestroy {
+  category : Category[] = [];
+endSubs$: Subject<any> = new Subject();
+
   constructor(private categoriesService: CategoriesService, 
     private messageService: MessageService,
     private confirmationService : ConfirmationService,
@@ -20,6 +24,12 @@ export class CategoriesListComponent implements OnInit {
 
   ngOnInit(): void {
     this._getCategories()
+    
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.next()
+    this.endSubs$.complete()
   }
 
   deleteCategory(categoryId: string){
@@ -28,7 +38,7 @@ export class CategoriesListComponent implements OnInit {
       header: 'Delete Category',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.categoriesService.deleteCategory(categoryId).subscribe((category : Category) => {
+        this.categoriesService.deleteCategory(categoryId).pipe(takeUntil(this.endSubs$)).subscribe((category : Category) => {
           this._getCategories()
           this.messageService.add({severity:'success', summary:'Success', detail:`Category ${category.name} deleted`});
         }, 
@@ -45,7 +55,7 @@ export class CategoriesListComponent implements OnInit {
   }
 
   private _getCategories(){
-    this.categoriesService.getCategories().subscribe(res => {
+    this.categoriesService.getCategories().pipe(takeUntil(this.endSubs$)).subscribe(res => {
       this.category = res
     })
   }

@@ -25,5 +25,6 @@ export const usersRoutes: Route[] = [
   declarations: [
     LoginComponent
   ],
+  exports: [LoginComponent]
 })
 export class UsersModule {}

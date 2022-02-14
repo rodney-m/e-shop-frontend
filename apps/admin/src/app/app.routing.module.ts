@@ -1,5 +1,7 @@
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import {  RouterModule, Routes } from "@angular/router";
+import { AuthGuard, JwtInterceptor } from "@bluebits/users";
 import { CategoriesFormComponent } from "./pages/categories/categories-form/categories-form.component";
 import { CategoriesListComponent } from "./pages/categories/categories-list/categories-list.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
@@ -15,9 +17,10 @@ const routes :Routes = [
     {
         path : '', 
         component: ShellComponent,
+        canActivate:[AuthGuard],
         children : [
           {
-            path: 'dashboard',
+            path: '',
             component: DashboardComponent
           },
           {
@@ -68,6 +71,11 @@ const routes :Routes = [
             path: 'orders/:id',
             component: OrdersDetailComponent
           },
+          {
+            path: '**',
+            redirectTo: '',
+            pathMatch: 'full'
+          }
           
         ]
       }
@@ -77,7 +85,10 @@ const routes :Routes = [
     imports:[
         RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' })
     ],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [
+      {provide : HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    ]
 })
 export class AppRoutingModule{
 

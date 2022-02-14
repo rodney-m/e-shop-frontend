@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '@bluebits/users';
+import { LocalStorageService } from '@bluebits/users';
 
 
 @Component({
@@ -17,7 +19,9 @@ export class LoginComponent implements OnInit {
   authMessage = 'Email or Password are wrong';
   constructor(
     private formBuilder: FormBuilder,
-    private authservice: AuthService
+    private authservice: AuthService,
+    private localStorageService: LocalStorageService,
+    private router : Router
     ) { }
 
   ngOnInit(): void {
@@ -40,7 +44,9 @@ export class LoginComponent implements OnInit {
     if (this.loginFormGroup.invalid) return;
     this.authservice.login(this.loginForm.email.value, this.loginForm.password.value)
       .subscribe(user => {
+        this.localStorageService.setToken(user.token)
         this.authError =false
+        this.router.navigate(['/']);
       }, (error : HttpErrorResponse) => {
         this.authError =true;
         if(error.status !== 400){
